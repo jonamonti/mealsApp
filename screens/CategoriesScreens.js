@@ -2,13 +2,25 @@ import { CATEGORIES } from "../data/dummy-data";
 import { FlatList } from "react-native";
 import CategoryGridTile from "../components/CategoryGridTile";
 
-// this function doesn't have to be calculated on every re-render. 
-// That's why we create it outside the component function.
-const renderCategoryItem = (itemData) => {
-    return <CategoryGridTile title={itemData.item.title} color={itemData.item.color}/>
-}
+export default function CategoriesScreen({ navigation }) { 
+	// we get navigation prop provided by Stack.Navigation because CategoriesScreen 
+	// is used as a component in Stack.Screen in App.js
 
-export default function CategoriesScreen(){
+	const renderCategoryItem = (itemData) => {
+
+		const pressHandler = () => {
+			navigation.navigate('MealsOverview', { categoryId: itemData.item.id} ) // passing through props an object with data!
+		};
+
+    return(
+			<CategoryGridTile
+				title={itemData.item.title} 
+				color={itemData.item.color}
+				onPress={pressHandler}
+			/>
+		)
+
+}
     return(
         <FlatList 
             data={CATEGORIES} 
